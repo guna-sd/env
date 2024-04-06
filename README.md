@@ -1,5 +1,6 @@
 ### env
-env is a virtual enviroment management tool for mojo ...
+env is a virtual enviroment tool for mojo ...
+env (for mojo🔥) allows you to manage separate package installations for different projects. It creates a “virtual” isolated mojo🔥 installation. When you switch projects, you can create a new virtual environment which is isolated from other virtual environments.
 
 ## prerequisites
 
