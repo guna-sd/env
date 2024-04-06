@@ -102,10 +102,8 @@ fn main() raises :
     var name : String = ""
     var args = argv()
     if (args.__len__() == 1):
-        print("\nUsage: mojo env.mojo <path-to-env> [options]")
+        print("\nUsage: mojo env.mojo <path-to-env>")
         print('\nExample: mojo env.mojo /home/sam/mojoenv')
-        print("\nOptions:")
-        print("\nNone")
     else:
             for i in range(1, args.__len__()):
                 path = path.__add__(str(args[i]))
