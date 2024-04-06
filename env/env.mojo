@@ -87,7 +87,7 @@ struct envbuider:
         """
         Creates a script from the pre-defined script templates.
         """
-        var shf = open("../scripts/activate", "r")
+        var shf = open("./scripts/activate", "r")
         #var psf = open("../scripts/activate.ps1", "r")
         var script = shf.read()
         shf.close()
