@@ -80,6 +80,7 @@ struct envbuider:
             var bin = env_dir.joinpath("bin/mojo")
             pyos.symlink(mojo, str(bin))
             self.script(env_dir)
+            print("\nCreated environment in " + str(env_dir) + " successfully...\n")
         else:
             print("could not create in existing directory try deleting the path or creating on a new one")
 
