@@ -93,7 +93,7 @@ struct envbuider:
         var script = shf.read()
         shf.close()
         script = script.replace('__VENV_DIR__', env_dir)
-        script = script.replace('__VENV_PROMPT__',self.env_name)
+        script = script.replace('__VENV_PROMPT__','(' +self.env_name+')')
         var sh = open(env_dir.joinpath("/bin/activate"), 'w')
         sh.write(script)
         sh.close()
