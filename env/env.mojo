@@ -103,7 +103,7 @@ fn main() raises :
     var args = argv()
     if (args.__len__() == 1):
         print("\nUsage: mojo env.mojo <path-to-env>")
-        print('\nExample: mojo env.mojo /home/sam/mojoenv')
+        print('\nExample: mojo env.mojo /home/sam/mojoenv\n')
     else:
             for i in range(1, args.__len__()):
                 path = path.__add__(str(args[i]))
