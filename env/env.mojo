@@ -8,6 +8,8 @@ fn abspath(path: Path) raises -> String:
     """
     Return the absolute path to the given path.
     """
+    if path == './' or path == '.':
+        return cwd()
     return cwd().joinpath(String(path).replace("./", ""))
 
 fn mkdir(path: Path) raises -> Bool:
