@@ -1,32 +1,7 @@
-from os.path.path import os_is_macos, os_is_linux, os_is_windows, exists
-from pathlib.path import cwd, Path
+from env.utils import os_is_windows, os_is_linux, os_is_macos, user, mkdir, rmdir, expandpath
 from python import Python
-from os.env import getenv
 from sys.arg import argv
-
-fn abspath(path: Path) raises -> String:
-    """
-    Return the absolute path to the given path.
-    """
-    if path == './' or path == '.':
-        return cwd()
-    return cwd().joinpath(String(path).replace("./", ""))
-
-fn mkdir(path: Path) raises -> Bool:
-    """
-    Create a directory at the given path.
-    """
-    if not exists(path):
-        var f = open(path.joinpath("/.init"), "w")
-        f.close()
-        f = open(path.joinpath("/bin/.init"), "w")
-        f.close()
-        f = open(path.joinpath("/lib/mojo/.init"), "w")
-        f.close()
-        return True
-    else:
-        print("Directory already exists")
-        return False
+from pathlib.path import Path
 
 struct envbuider:
     """
@@ -58,7 +33,7 @@ struct envbuider:
             self.os_type = "windows"
         else:
             self.os_type = "unknown"
-        self.user = getenv("USER")
+        self.user = user()
         self.env_name = name
 
     fn build(inout self : Self, owned env_dir : Path) raises:
@@ -71,7 +46,7 @@ struct envbuider:
         if self.dotpath == False:
             env_dir = Path(env_dir)
         else:
-            env_dir = abspath(env_dir)
+            env_dir = expandpath(env_dir)
         if mkdir(env_dir):
             var pyos = Python.import_module("os")
             # var mlib = Python.import_module("requests")
