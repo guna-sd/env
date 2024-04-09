@@ -1,9 +1,8 @@
 from python import Python
 from sys.arg import argv
-from pathlib.path import cwd, Path
-from os.path.path import os_is_macos, os_is_linux, os_is_windows, exists
+from pathlib.path import Path, cwd
+from os.path.path import exists, os_is_linux, os_is_macos, os_is_windows
 from os.env import getenv
-from sys import external_call
 
 fn expandpath(path: Path) raises -> String:
     """
@@ -56,9 +55,8 @@ struct envbuider:
     var dotpath : Bool
     var os_type : String
     var user : String
-    var force : Bool
 
-    fn __init__(inout self : Self, path: String,name : String, with_mlib: Bool = True, force : Bool = False):
+    fn __init__(inout self : Self, path: String,name : String, with_mlib: Bool = True):
         self.path = path
         if self.path.startswith("."):
             self.dotpath = True
@@ -73,7 +71,6 @@ struct envbuider:
         else:
             self.os_type = "unknown"
         self.user = user()
-        self.force = force
         self.env_name = name
 
     fn build(inout self : Self, owned env_dir : Path) raises:
@@ -96,16 +93,6 @@ struct envbuider:
             pyos.symlink(mojo, str(bin))
             self.script(env_dir)
             print("\nCreated environment in " + str(env_dir) + " successfully...\n")
-        if self.force:
-            if rmdir(env_dir):
-                        if mkdir(env_dir):
-                            var pyos = Python.import_module("os")
-                            var mojo = "/home/" + self.user + "/.modular/pkg/packages.modular.com_mojo/bin/mojo"
-                            var lib = env_dir.joinpath("lib/mojo")
-                            var bin = env_dir.joinpath("bin/mojo")
-                            pyos.symlink(mojo, str(bin))
-                            self.script(env_dir)
-                            print("\nCreated environment in " + str(env_dir) + " successfully...\n")
         else:
             print("could not create in existing directory try deleting the path or creating on a new one")
 
@@ -128,8 +115,7 @@ fn main() raises :
     var name : String = ""
     var args = argv()
     if (args.__len__() == 1):
-        print("\nUsage: mojo env.mojo <path-to-env> -options")
-        print("\nOptions:\n -f <force mode> indicates whether to delete the existing directory (default False)")
+        print("\nUsage: mojo env.mojo <path-to-env>")
         print('\nExample: mojo env.mojo /home/sam/mojoenv\n')
     else:
             for i in range(1, args.__len__()):
@@ -137,5 +123,5 @@ fn main() raises :
             var names = path.split("/")
             names.reverse()
             name = names[0]
-            var env = envbuider(path,name,True,True)
+            var env = envbuider(path,name,True)
             env.build(path)
